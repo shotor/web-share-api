@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Web Share API</title>
+  </head>
+  <body>
+    <button
+      class="share-button"
+      data-share-title="Web Share API @ MDN"
+      data-share-url="https://developer.mozilla.org/en-US/docs/Web/API/Web_Share_API"
+    >
+      Share MDN
+    </button>
+
+    <button
+      class="share-button"
+      data-share-title="Web Share API @ Google"
+      data-share-url="https://web.dev/web-share/"
+    >
+      Share Google
+    </button>
+
+    <script>
+      document.querySelectorAll('.share-button').forEach((button) => {
+        button.addEventListener('click', async () => {
+          const title = button.getAttribute('data-share-title')
+          const url = button.getAttribute('data-share-url')
+
+          if (navigator.share) {
+            await navigator.share({
+              title,
+              url,
+            })
+            console.log('Thanks for sharing!')
+            return
+          }
+
+          const shareUrl = `https://twitter.com/share?url=${encodeURIComponent(
+            url
+          )}`
+          window.open(shareUrl, '_blank')
+        })
+      })
+    </script>
+  </body>
+</html>
